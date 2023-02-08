@@ -9,6 +9,7 @@ class Face_recognition_sys():
         self.root.title("Face Recognition")
 
         # to add img
+        # image 1 of header
         img=Image.open(r"C:\hello\python-project\images\img1-unsplash.jpg")
         img=img.resize((500,130),Image.ANTIALIAS)  #ANTILIAS converts high level img to low level
         self.photoimg=ImageTk.PhotoImage(img)
@@ -16,6 +17,7 @@ class Face_recognition_sys():
         f_lbl=Label(self.root,image=self.photoimg)
         f_lbl.place(x=0,y=0,width=382,height=130)
 
+        # image2 of the header
         img1=Image.open(r"C:\hello\python-project\images\img3.jpg")
         img1=img1.resize((300,130),Image.ANTIALIAS)  #ANTILIAS converts high level img to low level
         self.photoimg1=ImageTk.PhotoImage(img1)
@@ -23,7 +25,7 @@ class Face_recognition_sys():
         f_lbl=Label(self.root,image=self.photoimg1)
         f_lbl.place(x=300,y=0,width=300,height=130)
 
-
+        # image3 of the header of homepage
         img2=Image.open(r"C:\hello\python-project\images\img4.png")
         img2=img2.resize((400,130),Image.ANTIALIAS)  #ANTILIAS converts high level img to low level
         self.photoimg2=ImageTk.PhotoImage(img2)
@@ -31,12 +33,15 @@ class Face_recognition_sys():
         f_lbl=Label(self.root,image=self.photoimg2)
         f_lbl.place(x=600,y=0,width=382,height=130)
 
+        # image4 of the header of homepage
         img3=Image.open(r"C:\hello\python-project\images\img2.png")
-        img3=img3.resize((400,130),Image.ANTIALIAS)  #ANTILIAS converts high level img to low level
+        img3=img3.resize((600,130),Image.ANTIALIAS)  #ANTILIAS converts high level img to low level
         self.photoimg3=ImageTk.PhotoImage(img3)
 
         f_lbl=Label(self.root,image=self.photoimg3)
         f_lbl.place(x=980,y=0,width=300,height=130)
+
+        img4 = Image.open(r"C:\hello\python-project\images\img4.png")
 
 
 
