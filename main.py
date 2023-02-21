@@ -2,7 +2,7 @@ from tkinter import*
 from tkinter import ttk
 from PIL import Image,ImageTk
 
-class Face_recognition_sys():
+class Face_recognition_sys:
     def __init__(self,root):
         self.root=root
         self.root.geometry("1530x790+0+0")
@@ -43,9 +43,92 @@ class Face_recognition_sys():
 
         img4 = Image.open(r"C:\hello\python-project\images\img4.png")
 
+        # backgroound image
+        img5=Image.open(r"C:\hello\python-project\images\gradient_img5 (1).png")
+        img5=img5.resize((1530,710),Image.ANTIALIAS)  #ANTILIAS converts high level img to low level
+        self.photoimg5=ImageTk.PhotoImage(img5)
+
+        bgimg_lbl=Label(self.root,image=self.photoimg5)
+        bgimg_lbl.place(x=0,y=130,width=1530,height=710)
+
+        # title label
+
+        title_lbl = Label(bgimg_lbl,text="IDENTIFICATION OF CAREGIVERS USING FACE RECOGNITION",font=("arial",25,"bold"),bg="white",fg="black")
+        title_lbl.place(relx=0.4,rely=0.03,width=1530,height=45,anchor=CENTER)
+        
+
+        # ================== buttons =========================
+
+        # caregiver button
+        img6=Image.open(r"C:\hello\python-project\images\caregiver_img1.jpg")
+        img6=img6.resize((150,150),Image.ANTIALIAS)  #ANTILIAS converts high level img to low level
+        self.photoimg6=ImageTk.PhotoImage(img6)
+
+        btn1 = Button(bgimg_lbl,image=self.photoimg6,cursor="hand2")
+        btn1.place(x=70,y=80,width=150,height=150)
+
+        btn1_1 = Button(bgimg_lbl,text="Caregiver Details",cursor="hand2",font=("arial",10,"bold"),bg="darkblue",fg="white")
+        btn1_1.place(x=70,y=220,width=150,height=40)
 
 
+        # detectface button
+        img7=Image.open(r"C:\hello\python-project\images\face_detector.jpeg")
+        img7=img7.resize((150,150),Image.ANTIALIAS)  #ANTILIAS converts high level img to low level
+        self.photoimg7=ImageTk.PhotoImage(img7)
 
+        btn2 = Button(bgimg_lbl,image=self.photoimg7,cursor="hand2")
+        btn2.place(x=260,y=80,width=150,height=150)
+
+        btn2_2 = Button(bgimg_lbl,text="Face Detector",cursor="hand2",font=("arial",10,"bold"),bg="darkblue",fg="white")
+        btn2_2.place(x=260,y=220,width=150,height=40)
+
+
+        # regular status button
+        img8=Image.open(r"C:\hello\python-project\images\regular_status.webp")
+        img8=img8.resize((150,150),Image.ANTIALIAS)  #ANTILIAS converts high level img to low level
+        self.photoimg8=ImageTk.PhotoImage(img8)
+
+        btn3 = Button(bgimg_lbl,image=self.photoimg8,cursor="hand2")
+        btn3.place(x=455,y=80,width=150,height=150)
+
+        btn3_3 = Button(bgimg_lbl,text="Regular Status",cursor="hand2",font=("arial",10,"bold"),bg="darkblue",fg="white")
+        btn3_3.place(x=455,y=220,width=150,height=40)
+
+
+         # photos button
+        img9=Image.open(r"C:\hello\python-project\images\gallary.jpg")
+        img9=img9.resize((150,150),Image.ANTIALIAS)  #ANTILIAS converts high level img to low level
+        self.photoimg9=ImageTk.PhotoImage(img9)
+
+        btn4 = Button(bgimg_lbl,image=self.photoimg9,cursor="hand2")
+        btn4.place(x=655,y=80,width=150,height=150)
+
+        btn4_4 = Button(bgimg_lbl,text="Photos",cursor="hand2",font=("arial",10,"bold"),bg="darkblue",fg="white")
+        btn4_4.place(x=655,y=220,width=150,height=40)
+
+
+         # help desk button
+        img10=Image.open(r"C:\hello\python-project\images\help_desk.jpg")
+        img10=img10.resize((150,150),Image.ANTIALIAS)  #ANTILIAS converts high level img to low level
+        self.photoimg10=ImageTk.PhotoImage(img10)
+
+        btn5 = Button(bgimg_lbl,image=self.photoimg10,cursor="hand2")
+        btn5.place(x=855,y=80,width=150,height=150)
+
+        btn5_5 = Button(bgimg_lbl,text="Help Desk",cursor="hand2",font=("arial",10,"bold"),bg="darkblue",fg="white")
+        btn5_5.place(x=855,y=220,width=150,height=40)
+
+
+         # Exit desk button
+        img11=Image.open(r"C:\hello\python-project\images\exit.jpg")
+        img11=img11.resize((150,150),Image.ANTIALIAS)  #ANTILIAS converts high level img to low level
+        self.photoimg11=ImageTk.PhotoImage(img11)
+
+        btn6 = Button(bgimg_lbl,image=self.photoimg11,cursor="hand2")
+        btn6.place(x=1050,y=80,width=150,height=150)
+
+        btn6_6 = Button(bgimg_lbl,text="Exit",cursor="hand2",font=("arial",10,"bold"),bg="darkblue",fg="white")
+        btn6_6.place(x=1050,y=220,width=150,height=40)
 
 
 if __name__ == "__main__":
