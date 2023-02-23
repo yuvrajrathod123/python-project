@@ -245,9 +245,82 @@ class caregiver:
 
 
 
+
         # ==================== right side label frame ==================
         right_frame = LabelFrame(main_frame,bg="white",bd=2,relief=RIDGE,text="Caregiver Details",font=("arial",12,"bold"))
         right_frame.place(x=620,y=10,width=625,height=580)
+
+        # ============================== searching systm ==============================
+
+        search_frame = LabelFrame(right_frame,bg="white",bd=2,relief=RIDGE,text="Search System",font=("arial",12,"bold"))
+        search_frame.place(x=5,y=7,width=610,height=70)
+
+        search_lbl = Label(search_frame,text="Search By",font=("arial",12,"bold"),bg='red',fg="white")
+        search_lbl.grid(row=0,column=0,padx=10,pady=7,sticky=W)
+
+        search_combo = ttk.Combobox(search_frame,font=("arial",10,"bold"),width=15,state="readonly")
+        search_combo["values"]=("select","CaregiverID","Mobile No")
+        search_combo.current(0)
+        search_combo.grid(row=0,column=1,padx=5,pady=10,sticky=W)
+
+        search_entry = ttk.Entry(search_frame,width=20,font=("arial",10,"bold"))
+        search_entry.grid(row=0,column=2,padx=5,pady=5,sticky=W)
+
+        search_btn = Button(search_frame,text="Search",font=("arial",10,"bold"),bg="RoyalBlue1",fg="white",width=10)
+        search_btn.grid(row=0,column=3,padx=5)
+
+        show_all_btn = Button(search_frame,text="Show All",font=("arial",10,"bold"),bg="RoyalBlue1",fg="white",width=10)
+        show_all_btn.grid(row=0,column=4)
+
+
+        # ===================== table frame ============================
+        table_frame = Frame(right_frame,bg="white",bd=2,relief=RIDGE)
+        table_frame.place(x=5,y=80,width=610,height=350)
+
+        scroll_x =ttk.Scrollbar(table_frame,orient=HORIZONTAL)
+        scroll_y =ttk.Scrollbar(table_frame,orient=VERTICAL)
+        
+        self.caregiver_table = ttk.Treeview(table_frame,column=("caregiverID","working_mode","gender","care_recipient","state","caregiver_name","mobile_no","email","age","dob","date_of_joining","emergency_no","address","recipient_disease","photo"),xscrollcommand=scroll_x.set,yscrollcommand=scroll_y.set)
+
+        scroll_x.pack(side=BOTTOM,fill=X)
+        scroll_y.pack(side=RIGHT,fill=Y)
+        scroll_x.config(command=self.caregiver_table.xview)
+        scroll_y.config(command=self.caregiver_table.yview)
+
+        self.caregiver_table.heading("caregiverID",text="CaregiversID")
+        self.caregiver_table.heading("working_mode",text="Working Mode")
+        self.caregiver_table.heading("gender",text="Gender")
+        self.caregiver_table.heading("care_recipient",text="Care Recipient")
+        self.caregiver_table.heading("state",text="State")
+        self.caregiver_table.heading("caregiver_name",text="Caregiver Name")
+        self.caregiver_table.heading("mobile_no",text="Mobile No")
+        self.caregiver_table.heading("email",text="Email")
+        self.caregiver_table.heading("age",text="Age")
+        self.caregiver_table.heading("dob",text="DOB")
+        self.caregiver_table.heading("date_of_joining",text="Date Of Joining")
+        self.caregiver_table.heading("emergency_no",text="Emergency No")
+        self.caregiver_table.heading("address",text="Address")
+        self.caregiver_table.heading("recipient_disease",text="Recipient Disease")
+        self.caregiver_table.heading("photo",text="Photo")
+        self.caregiver_table["show"]="headings"
+
+        self.caregiver_table.column("caregiverID",width=100)
+        self.caregiver_table.column("working_mode",width=100)
+        self.caregiver_table.column("gender",width=100)
+        self.caregiver_table.column("care_recipient",width=100)
+        self.caregiver_table.column("state",width=100)
+        self.caregiver_table.column("caregiver_name",width=100)
+        self.caregiver_table.column("mobile_no",width=100)
+        self.caregiver_table.column("email",width=100)
+        self.caregiver_table.column("age",width=100)
+        self.caregiver_table.column("dob",width=100)
+        self.caregiver_table.column("date_of_joining",width=100)
+        self.caregiver_table.column("emergency_no",width=100)
+        self.caregiver_table.column("address",width=100)
+        self.caregiver_table.column("recipient_disease",width=100)
+        self.caregiver_table.column("photo",width=100)
+
+        self.caregiver_table.pack(fill=BOTH,expand=1)
 
 
 if __name__ == "__main__":
