@@ -172,8 +172,8 @@ class caregiver:
         doj_entry.grid(row=3,column=1,padx=0,sticky=W)
 
 
-         # city
-        city_lbl = Label(Extra_info_frame,text="City",font=("arial",10,"bold"),bg='white')
+         # emergency no
+        city_lbl = Label(Extra_info_frame,text="Emergency No",font=("arial",10,"bold"),bg='white')
         city_lbl.grid(row=3,column=2,padx=10,pady=7,sticky=W)
 
         city_entry = ttk.Entry(Extra_info_frame,width=20,font=("arial",10,"bold"))
@@ -185,6 +185,13 @@ class caregiver:
 
         address_entry = ttk.Entry(Extra_info_frame,width=20,font=("arial",10,"bold"))
         address_entry.grid(row=4,column=1,padx=0,sticky=W)
+
+         # recipient dises
+        disease_lbl = Label(Extra_info_frame,text="Recipient Disease",font=("arial",10,"bold"),bg='white')
+        disease_lbl.grid(row=4,column=2,padx=10,pady=7,sticky=W)
+
+        disease_entry = ttk.Entry(Extra_info_frame,width=20,font=("arial",10,"bold"))
+        disease_entry.grid(row=4,column=3,padx=0,sticky=W)
 
 
         # ==================== radio buttton ==============
