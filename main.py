@@ -1,12 +1,14 @@
 from tkinter import*
 from tkinter import ttk
 from PIL import Image,ImageTk
+from caregiver import Caregiver
 
 class Face_recognition_sys:
     def __init__(self,root):
         self.root=root
         self.root.geometry("1530x790+0+0")
         self.root.title("Face Recognition")
+
 
         # to add img
         # image 1 of header
@@ -119,7 +121,7 @@ class Face_recognition_sys:
         btn5_5.place(x=855,y=220,width=150,height=40)
 
 
-         # Exit desk button
+         # Exit button
         img11=Image.open(r"C:\hello\python-project\images\exit.jpg")
         img11=img11.resize((150,150),Image.ANTIALIAS)  #ANTILIAS converts high level img to low level
         self.photoimg11=ImageTk.PhotoImage(img11)
@@ -131,7 +133,14 @@ class Face_recognition_sys:
         btn6_6.place(x=1050,y=220,width=150,height=40)
 
 
+        # ================= Function button ======================
+
+        def caregiver_details(self): 
+            self.new_window=Toplevel(self.root)
+            self.app = Caregiver(self.new_window)
+        
 if __name__ == "__main__":
     root=Tk()
     obj = Face_recognition_sys(root)
     root.mainloop()
+
