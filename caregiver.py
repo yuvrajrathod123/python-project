@@ -1,12 +1,34 @@
 from tkinter import*
 from tkinter import ttk
 from PIL import Image,ImageTk
+from tkinter import messagebox
+# import mysql.connector
+
+import pymysql
 
 class Caregiver:
     def __init__(self,root):
         self.root=root
         self.root.geometry("1530x790+0+0")
         self.root.title("Face Recognition")
+
+
+        # ======================== Variables =====================
+
+        self.var_working_mode = StringVar()
+        self.var_gender = StringVar()
+        self.var_care_recipient = StringVar()
+        self.var_state = StringVar()
+        self.var_caregiverID = StringVar()
+        self.var_caregiver_name = StringVar()
+        self.var_Mo_no = StringVar()
+        self.var_email = StringVar()
+        self.var_age = StringVar()
+        self.var_dob = StringVar()
+        self.var_doj = StringVar()
+        self.Var_Emergency_no = StringVar()
+        self.var_adress = StringVar()
+        self.var_recipient_disease = StringVar()
 
     
         # to add img
@@ -84,7 +106,7 @@ class Caregiver:
         time_lbl = Label(basic_details_frame,text="Working Mode",font=("arial",10,"bold"),bg='white')
         time_lbl.grid(row=0,column=0,padx=10)
 
-        time_combo = ttk.Combobox(basic_details_frame,font=("arial",10,"bold"),width=17,state="readonly")
+        time_combo = ttk.Combobox(basic_details_frame,textvariable=self.var_working_mode, font=("arial",10,"bold"),width=17,state="readonly")
         time_combo["values"]=("select","Full Time","Part Time")
         time_combo.current(0)
         time_combo.grid(row=0,column=1,padx=5,pady=10)
@@ -93,7 +115,7 @@ class Caregiver:
         gender_lbl = Label(basic_details_frame,text="Gender",font=("arial",10,"bold"),bg='white')
         gender_lbl.grid(row=0,column=2,padx=10)
 
-        gender_combo = ttk.Combobox(basic_details_frame,font=("arial",10,"bold"),width=17,state="readonly")
+        gender_combo = ttk.Combobox(basic_details_frame,textvariable=self.var_gender,font=("arial",10,"bold"),width=17,state="readonly")
         gender_combo["values"]=("select","Male","Female","Transgender")
         gender_combo.current(0)
         gender_combo.grid(row=0,column=3,padx=5,pady=10)
@@ -102,7 +124,7 @@ class Caregiver:
         care_recipient_lbl = Label(basic_details_frame,text="Care Recepient",font=("arial",10,"bold"),bg='white')
         care_recipient_lbl.grid(row=1,column=0,padx=10)
 
-        care_recipient_combo = ttk.Combobox(basic_details_frame,font=("arial",10,"bold"),width=17,state="readonly")
+        care_recipient_combo = ttk.Combobox(basic_details_frame,textvariable=self.var_care_recipient,font=("arial",10,"bold"),width=17,state="readonly")
         care_recipient_combo["values"]=("select","Elderly(over 60)","Adult with a disability(18 to 59)","child(under 15)")
         care_recipient_combo.current(0)
         care_recipient_combo.grid(row=1,column=1,padx=5,pady=10)
@@ -111,7 +133,7 @@ class Caregiver:
         state_lbl = Label(basic_details_frame,text="State",font=("arial",10,"bold"),bg='white')
         state_lbl.grid(row=1,column=2,padx=10)
 
-        state_combo = ttk.Combobox(basic_details_frame,font=("arial",10,"bold"),width=17,state="readonly")
+        state_combo = ttk.Combobox(basic_details_frame,textvariable=self.var_state,font=("arial",10,"bold"),width=17,state="readonly")
         state_combo["values"]=("select","Maharashtra","Andhra Pradesh","Arunachal Pradesh","Assam","Bihar","Chhattisgarh","Delhi","Goa","Gujarat","Haryana","Himachal Pradesh","Jammu and Kashmir","Jharkhand","Karnataka","Kerala","Ladakh","Madhya Pradesh","Punjab","Rajasthan","Sikkim","Tamil Nadu","Telangana","Uttar Pradesh","Uttarakhand","West Bengal")
         state_combo.current(0)
         state_combo.grid(row=1,column=3,padx=5,pady=10)
@@ -124,35 +146,35 @@ class Caregiver:
         caregiverId_lbl = Label(Extra_info_frame,text="CaregiversID",font=("arial",10,"bold"),bg='white')
         caregiverId_lbl.grid(row=0,column=0,padx=10,pady=7,sticky=W)
 
-        caregiverId_entry = ttk.Entry(Extra_info_frame,width=20,font=("arial",10,"bold"))
+        caregiverId_entry = ttk.Entry(Extra_info_frame,textvariable=self.var_caregiverID,width=20,font=("arial",10,"bold"))
         caregiverId_entry.grid(row=0,column=1,padx=0,sticky=W)
 
         # Caregiver name
         caregiver_name_lbl = Label(Extra_info_frame,text="Caregiver's Name",font=("arial",10,"bold"),bg='white')
         caregiver_name_lbl.grid(row=0,column=2,padx=10,pady=7,sticky=W)
 
-        caregiver_name_entry = ttk.Entry(Extra_info_frame,width=20,font=("arial",10,"bold"))
+        caregiver_name_entry = ttk.Entry(Extra_info_frame,textvariable=self.var_caregiver_name,width=20,font=("arial",10,"bold"))
         caregiver_name_entry.grid(row=0,column=3,padx=0,sticky=W)
 
         # mobile no
         mobile_no_lbl = Label(Extra_info_frame,text="Mobile No",font=("arial",10,"bold"),bg='white')
         mobile_no_lbl.grid(row=1,column=0,padx=10,pady=7,sticky=W)
 
-        mobile_no_entry = ttk.Entry(Extra_info_frame,width=20,font=("arial",10,"bold"))
+        mobile_no_entry = ttk.Entry(Extra_info_frame,textvariable=self.var_Mo_no,width=20,font=("arial",10,"bold"))
         mobile_no_entry.grid(row=1,column=1,padx=0,sticky=W)
 
           # Caregiver email
         email_lbl = Label(Extra_info_frame,text="Email",font=("arial",10,"bold"),bg='white')
         email_lbl.grid(row=1,column=2,padx=10,pady=7,sticky=W)
 
-        email_entry = ttk.Entry(Extra_info_frame,width=20,font=("arial",10,"bold"))
+        email_entry = ttk.Entry(Extra_info_frame,textvariable=self.var_email,width=20,font=("arial",10,"bold"))
         email_entry.grid(row=1,column=3,padx=0,sticky=W)
 
         # age
         age_lbl = Label(Extra_info_frame,text="Age",font=("arial",10,"bold"),bg='white')
         age_lbl.grid(row=2,column=0,padx=10,pady=7,sticky=W)
 
-        age_entry = ttk.Entry(Extra_info_frame,width=20,font=("arial",10,"bold"))
+        age_entry = ttk.Entry(Extra_info_frame,textvariable=self.var_age,width=20,font=("arial",10,"bold"))
         age_entry.grid(row=2,column=1,padx=0,sticky=W)
 
 
@@ -160,7 +182,7 @@ class Caregiver:
         dob_lbl = Label(Extra_info_frame,text="Date Of Birth",font=("arial",10,"bold"),bg='white')
         dob_lbl.grid(row=2,column=2,padx=10,pady=7,sticky=W)
 
-        dob_entry = ttk.Entry(Extra_info_frame,width=20,font=("arial",10,"bold"))
+        dob_entry = ttk.Entry(Extra_info_frame,textvariable=self.var_dob,width=20,font=("arial",10,"bold"))
         dob_entry.grid(row=2,column=3,padx=0,sticky=W)
 
 
@@ -168,7 +190,7 @@ class Caregiver:
         doj_lbl = Label(Extra_info_frame,text="Date of joining",font=("arial",10,"bold"),bg='white')
         doj_lbl.grid(row=3,column=0,padx=10,pady=7,sticky=W)
 
-        doj_entry = ttk.Entry(Extra_info_frame,width=20,font=("arial",10,"bold"))
+        doj_entry = ttk.Entry(Extra_info_frame,textvariable=self.var_doj,width=20,font=("arial",10,"bold"))
         doj_entry.grid(row=3,column=1,padx=0,sticky=W)
 
 
@@ -176,30 +198,32 @@ class Caregiver:
         city_lbl = Label(Extra_info_frame,text="Emergency No",font=("arial",10,"bold"),bg='white')
         city_lbl.grid(row=3,column=2,padx=10,pady=7,sticky=W)
 
-        city_entry = ttk.Entry(Extra_info_frame,width=20,font=("arial",10,"bold"))
+        city_entry = ttk.Entry(Extra_info_frame,textvariable=self.Var_Emergency_no,width=20,font=("arial",10,"bold"))
         city_entry.grid(row=3,column=3,padx=0,sticky=W)
 
          # adreess
         address_lbl = Label(Extra_info_frame,text="Address",font=("arial",10,"bold"),bg='white')
         address_lbl.grid(row=4,column=0,padx=10,pady=7,sticky=W)
 
-        address_entry = ttk.Entry(Extra_info_frame,width=20,font=("arial",10,"bold"))
+        address_entry = ttk.Entry(Extra_info_frame,textvariable=self.var_adress,width=20,font=("arial",10,"bold"))
         address_entry.grid(row=4,column=1,padx=0,sticky=W)
 
          # recipient dises
         disease_lbl = Label(Extra_info_frame,text="Recipient Disease",font=("arial",10,"bold"),bg='white')
         disease_lbl.grid(row=4,column=2,padx=10,pady=7,sticky=W)
 
-        disease_entry = ttk.Entry(Extra_info_frame,width=20,font=("arial",10,"bold"))
+        disease_entry = ttk.Entry(Extra_info_frame,textvariable=self.var_recipient_disease,width=20,font=("arial",10,"bold"))
         disease_entry.grid(row=4,column=3,padx=0,sticky=W)
 
 
         # ==================== radio buttton ==============
 
-        radiobtn1 = ttk.Radiobutton(Extra_info_frame,text="Take a photo sample",value="Yes")
+        self.var_radio1 = StringVar()
+        radiobtn1 = ttk.Radiobutton(Extra_info_frame,variable=self.var_radio1,text="Take a photo sample",value="Yes")
         radiobtn1.grid(row=5,column=0,padx=2,pady=2)
 
-        radiobtn2 = ttk.Radiobutton(Extra_info_frame,text="No photo sample",value="Yes")
+        
+        radiobtn2 = ttk.Radiobutton(Extra_info_frame,variable=self.var_radio1,text="No photo sample",value="No")
         radiobtn2.grid(row=5,column=1,padx=2,pady=2)
 
 
@@ -208,7 +232,7 @@ class Caregiver:
         btn_frame = LabelFrame(Extra_info_frame,bg="white",bd=2,relief=RIDGE)
         btn_frame.place(x=0,y=210,width=580,height=30)
 
-        save_btn = Button(btn_frame,text="Save",font=("arial",10,"bold"),bg="RoyalBlue1",fg="white",width=17)
+        save_btn = Button(btn_frame,command=self.add_data,text="Save",font=("arial",10,"bold"),bg="RoyalBlue1",fg="white",width=17)
         save_btn.grid(row=0,column=0)
 
         update_btn = Button(btn_frame,text="Update",font=("arial",10,"bold"),bg="RoyalBlue1",fg="white",width=17)
@@ -321,6 +345,64 @@ class Caregiver:
         self.caregiver_table.column("photo",width=100)
 
         self.caregiver_table.pack(fill=BOTH,expand=1)
+        self.fetch_data()
+
+#    =========================== Function =====================
+
+    def add_data(self):
+        if self.var_working_mode.get() == "Select working_mode" or self.var_caregiver_name.get() == ""  or self.var_caregiverID.get() == "":
+            messagebox.showerror("Error","All fields are required",parent =self.root)
+        else:
+            try:
+                # messagebox.showinfo("Done","Registration Successful") 
+                # conn = mysql.connector.connect(host="localhost",username="root",password="Yuvraj@5587", database="face_recognition")
+
+                conn =  pymysql.connect(host="localhost",database="face_recognition",user="root",password="Yuvraj@5587",port=3306)
+
+                my_cursor=conn.cursor()
+                my_cursor.execute("insert into caregiver values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",(
+
+                                                                self.var_working_mode.get(),
+                                                                self.var_gender.get(),
+                                                                self.var_care_recipient.get(),
+                                                                self.var_state.get(),
+                                                                self.var_caregiverID.get(),
+                                                                self.var_caregiver_name.get(),
+                                                                self.var_Mo_no.get(),
+                                                                self.var_email.get(),
+                                                                self.var_age.get(),
+                                                                self.var_dob.get(),
+                                                                self.var_doj.get(),
+                                                                self.Var_Emergency_no.get(),
+                                                                self.var_adress.get(),
+                                                                self.var_recipient_disease.get(),
+                                                                self.var_radio1.get()
+                                                             ))
+                conn.commit()
+                self.fetch_data()
+                conn.close()
+                messagebox.showinfo("Success","Caregiver details has been added Successfully",parent=self.root)   
+
+            except Exception as es:
+                messagebox.showerror("Error",f"Due to :{str(es)}",parent=self.root)
+
+# ========================== fetch data =======================
+
+    def fetch_data(self):
+        conn =  pymysql.connect(host="localhost",database="face_recognition",user="root",password="Yuvraj@5587",port=3306)
+        my_cursor=conn.cursor()
+
+        my_cursor.execute("select * from caregiver")
+        data=my_cursor.fetchall()
+
+        if len(data) != 0:
+            self.caregiver_table.delete(*self.caregiver_table.get_children())
+            for i in data:
+                self.caregiver_table.insert("",END,values=i)
+            conn.commit()
+        conn.close()        
+
+
 
 
 if __name__ == "__main__":
