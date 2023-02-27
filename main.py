@@ -1,7 +1,9 @@
 from tkinter import*
 from tkinter import ttk
 from PIL import Image,ImageTk
+
 from caregiver import Caregiver
+# import caregiver
 
 class Face_recognition_sys:
     def __init__(self,root):
@@ -66,10 +68,11 @@ class Face_recognition_sys:
         img6=img6.resize((150,150),Image.ANTIALIAS)  #ANTILIAS converts high level img to low level
         self.photoimg6=ImageTk.PhotoImage(img6)
 
-        btn1 = Button(bgimg_lbl,image=self.photoimg6,cursor="hand2")
+        btn1 = Button(bgimg_lbl,image=self.photoimg6,cursor="hand2",command=self.caregiver_details)
+     
         btn1.place(x=70,y=80,width=150,height=150)
 
-        btn1_1 = Button(bgimg_lbl,text="Caregiver Details",cursor="hand2",font=("arial",10,"bold"),bg="darkblue",fg="white")
+        btn1_1 = Button(bgimg_lbl,text="Caregiver Details",cursor="hand2",font=("arial",10,"bold"),bg="darkblue",fg="white",command= self.caregiver_details)
         btn1_1.place(x=70,y=220,width=150,height=40)
 
 
@@ -135,9 +138,9 @@ class Face_recognition_sys:
 
         # ================= Function button ======================
 
-        def caregiver_details(self): 
-            self.new_window=Toplevel(self.root)
-            self.app = Caregiver(self.new_window)
+    def caregiver_details(self): 
+        self.new_window = Toplevel(self.root)
+        self.app = Caregiver(self.new_window)
         
 if __name__ == "__main__":
     root=Tk()
