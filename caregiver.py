@@ -235,13 +235,13 @@ class Caregiver:
         save_btn = Button(btn_frame,command=self.add_data,text="Save",font=("arial",10,"bold"),bg="RoyalBlue1",fg="white",width=17)
         save_btn.grid(row=0,column=0)
 
-        update_btn = Button(btn_frame,text="Update",font=("arial",10,"bold"),bg="RoyalBlue1",fg="white",width=17)
+        update_btn = Button(btn_frame,command=self.update_data,text="Update",font=("arial",10,"bold"),bg="RoyalBlue1",fg="white",width=17)
         update_btn.grid(row=0,column=1)
 
-        delete_btn = Button(btn_frame,text="Delete",font=("arial",10,"bold"),bg="RoyalBlue1",fg="white",width=17)
+        delete_btn = Button(btn_frame,command=self.delete_data,text="Delete",font=("arial",10,"bold"),bg="RoyalBlue1",fg="white",width=17)
         delete_btn.grid(row=0,column=2)
 
-        reset_btn = Button(btn_frame,text="Reset",font=("arial",10,"bold"),bg="RoyalBlue1",fg="white",width=17)
+        reset_btn = Button(btn_frame,command=self.reset_data,text="Reset",font=("arial",10,"bold"),bg="RoyalBlue1",fg="white",width=17)
         reset_btn.grid(row=0,column=3)
 
             ################# frame for take a photo button ################
@@ -345,6 +345,7 @@ class Caregiver:
         self.caregiver_table.column("photo",width=100)
 
         self.caregiver_table.pack(fill=BOTH,expand=1)
+        self.caregiver_table.bind("<ButtonRelease>",self.get_cursor)
         self.fetch_data()
 
 #    =========================== Function =====================
@@ -400,7 +401,118 @@ class Caregiver:
             for i in data:
                 self.caregiver_table.insert("",END,values=i)
             conn.commit()
-        conn.close()        
+        conn.close()
+
+# ======================= get cursor =======================
+
+    def get_cursor(self,name):
+        print(name)
+        cursor_focus = self.caregiver_table.focus()
+        content = self.caregiver_table.item(cursor_focus)
+        data = content["values"] 
+
+        self.var_working_mode.set(data[0]),              
+        self.var_gender.set(data[1]),              
+        self.var_care_recipient.set(data[2]),              
+        self.var_state.set(data[3]),              
+        self.var_caregiverID.set(data[4]),              
+        self.var_caregiver_name.set(data[5]),              
+        self.var_Mo_no.set(data[6]),              
+        self.var_email.set(data[7]),              
+        self.var_age.set(data[8]),              
+        self.var_dob.set(data[9]),              
+        self.var_doj.set(data[10]),              
+        self.Var_Emergency_no.set(data[11]),              
+        self.var_adress.set(data[12]),              
+        self.var_recipient_disease.set(data[13]),
+        self.var_radio1.set(data[14])
+             
+
+#  ====================== update ======================
+# 
+    def update_data(self):
+        if self.var_working_mode.get() == "Select working_mode" or self.var_caregiver_name.get() == ""  or self.var_caregiverID.get() == "":
+            messagebox.showerror("Error","All fields are required",parent =self.root)
+        else:
+            try:
+                update= messagebox.askyesno("Update","Do you want to update this caregiver details",parent=self.root)
+                if update>0:
+                    conn =  pymysql.connect(host="localhost",database="face_recognition",user="root",password="Yuvraj@5587",port=3306)
+                    my_cursor=conn.cursor()
+
+                    my_cursor.execute("update caregiver set Working_Mode=%s,Gender=%s,Care_Recepient=%s,State=%s,Caregiver_Name=%s,Mobile_No=%s,Email=%s,Age=%s,DOB=%s,DOJ=%s,Emergency_No=%s,Address=%s,Recepient_Disease=%s,PhotoSample=%s where CaregiverID=%s",(
+
+                                                                self.var_working_mode.get(),
+                                                                self.var_gender.get(),
+                                                                self.var_care_recipient.get(),
+                                                                self.var_state.get(),
+                                                                self.var_caregiver_name.get(),
+                                                                self.var_Mo_no.get(),
+                                                                self.var_email.get(),
+                                                                self.var_age.get(),
+                                                                self.var_dob.get(),
+                                                                self.var_doj.get(),
+                                                                self.Var_Emergency_no.get(),
+                                                                self.var_adress.get(),
+                                                                self.var_recipient_disease.get(),
+                                                                self.var_radio1.get(),
+                                                                self.var_caregiverID.get()
+                                                 ))
+                    
+
+                else:
+                    if not update:
+                        return
+                messagebox.showinfo("Success","Caregiver details successfully updated",parent=self.root)              
+                conn.commit()
+                self.fetch_data()
+                conn.close()
+            except Exception as es:
+                messagebox.showerror("Error",f"Due To:{str(es)}",parent=self.root)
+
+# ======================= detete details ======================
+    def delete_data(self):
+        if self.var_caregiverID.get() == "":
+            messagebox.showerror("Error","Student id required",parent= self.root)
+        else:
+            try:
+                delete= messagebox.askyesno("Update","Do you want to delete this caregiver details",parent=self.root)
+                if delete>0:
+                    conn =  pymysql.connect(host="localhost",database="face_recognition",user="root",password="Yuvraj@5587",port=3306)
+                    my_cursor=conn.cursor()
+                    sql = "delete from caregiver where CaregiverID=%s"
+                    val=(self.var_caregiverID.get())
+                    my_cursor.execute(sql,val)
+                else:
+                    if not delete:
+                        return
+                        
+                conn.commit()
+                self.fetch_data()
+                conn.close()
+                messagebox.showinfo("Delete","Succesfully deleted caregivers details")
+            except Exception as es:
+                messagebox.showerror("Error",f"Due To:{str(es)}",parent=self.root)
+
+# ================ Reset ==============
+
+    def reset_data(self):
+        self.var_working_mode.set("select")
+        self.var_gender.set("select")
+        self.var_care_recipient.set("select")
+        self.var_state.set("select")
+        self.var_caregiverID.set("")
+        self.var_caregiver_name.set("")
+        self.var_Mo_no.set("")
+        self.var_email.set("")
+        self.var_age.set("")
+        self.var_dob.set("")
+        self.var_doj.set("")
+        self.Var_Emergency_no.set("")
+        self.var_adress.set("")
+        self.var_recipient_disease.set("")
+        self.var_radio1.set("")
+
 
 
 
