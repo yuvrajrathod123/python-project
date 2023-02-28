@@ -135,6 +135,18 @@ class Face_recognition_sys:
         btn6_6 = Button(bgimg_lbl,text="Exit",cursor="hand2",font=("arial",10,"bold"),bg="darkblue",fg="white")
         btn6_6.place(x=1050,y=220,width=150,height=40)
 
+        # caregiver button
+        img12=Image.open(r"C:\hello\python-project\images\img3.jpg")
+        img12=img12.resize((150,150),Image.ANTIALIAS)  #ANTILIAS converts high level img to low level
+        self.photoimg12=ImageTk.PhotoImage(img12)
+
+        btn7 = Button(bgimg_lbl,image=self.photoimg12,cursor="hand2")
+     
+        btn7.place(x=70,y=300,width=150,height=150)
+
+        btn7_7 = Button(bgimg_lbl,text="Train Data",cursor="hand2",font=("arial",10,"bold"),bg="darkblue",fg="white",command= self.caregiver_details)
+        btn7_7.place(x=70,y=440,width=150,height=40)
+
 
         # ================= Function button ======================
 
