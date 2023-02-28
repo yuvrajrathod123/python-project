@@ -490,7 +490,7 @@ class Caregiver:
                 conn.commit()
                 self.fetch_data()
                 conn.close()
-                messagebox.showinfo("Delete","Succesfully deleted caregivers details")
+                messagebox.showinfo("Delete","Succesfully deleted caregivers details",parent = self.root)
             except Exception as es:
                 messagebox.showerror("Error",f"Due To:{str(es)}",parent=self.root)
 
