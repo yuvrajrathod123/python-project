@@ -3,6 +3,7 @@ from tkinter import ttk
 from PIL import Image,ImageTk
 from tkinter import messagebox
 # import mysql.connector
+import cv2
 
 import pymysql
 
@@ -248,7 +249,7 @@ class Caregiver:
         btn2_frame = LabelFrame(Extra_info_frame,bg="white",bd=2,relief=RIDGE)
         btn2_frame.place(x=0,y=240,width=580,height=30)
 
-        take_photo_btn = Button(btn2_frame,text="Take photo sample",font=("arial",10,"bold"),bg="RoyalBlue1",fg="white",width=35)
+        take_photo_btn = Button(btn2_frame,command=self.generate_dataset,text="Take photo sample",font=("arial",10,"bold"),bg="RoyalBlue1",fg="white",width=35)
         take_photo_btn.grid(row=0,column=0)
 
         update_photo_btn = Button(btn2_frame,text="Update photo sample",font=("arial",10,"bold"),bg="RoyalBlue1",fg="white",width=35)
@@ -513,6 +514,83 @@ class Caregiver:
         self.var_recipient_disease.set("")
         self.var_radio1.set("")
 
+# ====================  take a photo sample ====================
+
+    def generate_dataset(self):
+        if self.var_working_mode.get() == "Select working_mode" or self.var_caregiver_name.get() == ""  or self.var_caregiverID.get() == "":
+            messagebox.showerror("Error","All fields are required",parent =self.root)
+        else:
+            try:
+                conn =  pymysql.connect(host="localhost",database="face_recognition",user="root",password="Yuvraj@5587",port=3306)
+                my_cursor=conn.cursor()
+                my_cursor.execute("select * from caregiver")
+                myresult = my_cursor.fetchall()
+                id = 0
+                for x in myresult:
+                    id+=1
+                my_cursor.execute("update caregiver set Working_Mode=%s,Gender=%s,Care_Recepient=%s,State=%s,Caregiver_Name=%s,Mobile_No=%s,Email=%s,Age=%s,DOB=%s,DOJ=%s,Emergency_No=%s,Address=%s,Recepient_Disease=%s,PhotoSample=%s where CaregiverID=%s",(
+
+                                                                self.var_working_mode.get(),
+                                                                self.var_gender.get(),
+                                                                self.var_care_recipient.get(),
+                                                                self.var_state.get(),
+                                                                self.var_caregiver_name.get(),
+                                                                self.var_Mo_no.get(),
+                                                                self.var_email.get(),
+                                                                self.var_age.get(),
+                                                                self.var_dob.get(),
+                                                                self.var_doj.get(),
+                                                                self.Var_Emergency_no.get(),
+                                                                self.var_adress.get(),
+                                                                self.var_recipient_disease.get(),
+                                                                self.var_radio1.get(),
+                                                                self.var_caregiverID.get() == id+1
+                                                 ))
+                conn.commit()
+                self.fetch_data()
+                self.reset_data()
+                conn.close()
+            
+                
+                # haar cascade algorithm to detect the object
+                # ========== load predefine data on face frontal from opencv ========
+
+                face_classifier = cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
+
+                def face_cropped(img):
+                    gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
+                    faces = face_classifier.detectMultiScale(gray,1.3,5)
+                    # scaling factor == 1.3
+                    # minimum neighbour == 5
+
+                    for (x,y,w,h) in faces:
+                        face_cropped=img[y:y+h,x:x+w]
+                        return face_cropped
+
+                #  opening camera  
+                cap = cv2.VideoCapture(0)
+                img_id = 0
+                while True:
+                    ret,my_frame=cap.read()
+                    if face_cropped(my_frame) is not None:
+                        img_id+=1
+                        face=cv2.resize(face_cropped(my_frame),(450,450))
+                        face=cv2.cvtColor(face,cv2.COLOR_BGR2GRAY)
+                        file_name_path ="data/user."+str(id)+"."+ str(img_id)+".jpg"
+                        cv2.imwrite(file_name_path,face)
+                        cv2.putText(face,str(img_id),(50,50),cv2.FONT_HERSHEY_COMPLEX,2,(0,255,0),2)
+                        cv2.imshow("Cropped face",face)
+
+                    # here 13 is when we click on enter window will close AND 100 image sample
+                    if cv2.waitKey(1) == 13 or int(img_id) == 100:
+                        break
+
+                cap.release() 
+                cv2.destroyAllWindows()
+                messagebox.showinfo("Result","Generating data sets complete succesfully!!") 
+
+            except Exception as es:
+                messagebox.showerror("Error",f"Due To:{str(es)}",parent=self.root)
 
 
 
