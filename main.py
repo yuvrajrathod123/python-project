@@ -4,6 +4,7 @@ from PIL import Image,ImageTk
 import os
 from caregiver import Caregiver
 from train import Train
+from face_recognition import Face_Recognition
 
 
 class Face_recognition_sys:
@@ -82,10 +83,10 @@ class Face_recognition_sys:
         img7=img7.resize((150,150),Image.ANTIALIAS)  #ANTILIAS converts high level img to low level
         self.photoimg7=ImageTk.PhotoImage(img7)
 
-        btn2 = Button(bgimg_lbl,image=self.photoimg7,cursor="hand2")
+        btn2 = Button(bgimg_lbl,command=self.detect_face,image=self.photoimg7,cursor="hand2")
         btn2.place(x=260,y=80,width=150,height=150)
 
-        btn2_2 = Button(bgimg_lbl,text="Face Detector",cursor="hand2",font=("arial",10,"bold"),bg="darkblue",fg="white")
+        btn2_2 = Button(bgimg_lbl,command=self.detect_face,text="Face Detector",cursor="hand2",font=("arial",10,"bold"),bg="darkblue",fg="white")
         btn2_2.place(x=260,y=220,width=150,height=40)
 
 
@@ -160,6 +161,10 @@ class Face_recognition_sys:
     def tarin_data(self): 
         self.new_window = Toplevel(self.root)
         self.app = Train(self.new_window)    
+        
+    def detect_face(self): 
+        self.new_window = Toplevel(self.root)
+        self.app = Face_Recognition(self.new_window)    
         
 if __name__ == "__main__":
     root=Tk()

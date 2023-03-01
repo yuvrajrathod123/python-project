@@ -252,7 +252,7 @@ class Caregiver:
         take_photo_btn = Button(btn2_frame,command=self.generate_dataset,text="Take photo sample",font=("arial",10,"bold"),bg="RoyalBlue1",fg="white",width=35)
         take_photo_btn.grid(row=0,column=0)
 
-        update_photo_btn = Button(btn2_frame,text="Update photo sample",font=("arial",10,"bold"),bg="RoyalBlue1",fg="white",width=35)
+        update_photo_btn = Button(btn2_frame,command=self.generate_dataset,text="Update photo sample",font=("arial",10,"bold"),bg="RoyalBlue1",fg="white",width=35)
         update_photo_btn.grid(row=0,column=2)
 
 
@@ -587,7 +587,7 @@ class Caregiver:
 
                 cap.release() 
                 cv2.destroyAllWindows()
-                messagebox.showinfo("Result","Generating data sets complete succesfully!!") 
+                messagebox.showinfo("Result","Generating data sets complete succesfully!!",parent=self.root) 
 
             except Exception as es:
                 messagebox.showerror("Error",f"Due To:{str(es)}",parent=self.root)

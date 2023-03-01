@@ -7,7 +7,6 @@ from tkinter import messagebox
 import cv2
 import os
 import numpy as np
-
 import pymysql
 
 class Train:
