@@ -4,6 +4,7 @@ from PIL import Image,ImageTk
 
 from caregiver import Caregiver
 # import caregiver
+import os
 
 class Face_recognition_sys:
     def __init__(self,root):
@@ -105,10 +106,10 @@ class Face_recognition_sys:
         img9=img9.resize((150,150),Image.ANTIALIAS)  #ANTILIAS converts high level img to low level
         self.photoimg9=ImageTk.PhotoImage(img9)
 
-        btn4 = Button(bgimg_lbl,image=self.photoimg9,cursor="hand2")
+        btn4 = Button(bgimg_lbl,command=self.open_img,image=self.photoimg9,cursor="hand2")
         btn4.place(x=655,y=80,width=150,height=150)
 
-        btn4_4 = Button(bgimg_lbl,text="Photos",cursor="hand2",font=("arial",10,"bold"),bg="darkblue",fg="white")
+        btn4_4 = Button(bgimg_lbl,command=self.open_img,text="Photos",cursor="hand2",font=("arial",10,"bold"),bg="darkblue",fg="white")
         btn4_4.place(x=655,y=220,width=150,height=40)
 
 
@@ -147,6 +148,9 @@ class Face_recognition_sys:
         btn7_7 = Button(bgimg_lbl,text="Train Data",cursor="hand2",font=("arial",10,"bold"),bg="darkblue",fg="white",command= self.caregiver_details)
         btn7_7.place(x=70,y=440,width=150,height=40)
 
+
+    def open_img(self):
+        os.startfile("data")
 
         # ================= Function button ======================
 
