@@ -5,6 +5,8 @@ from PIL import Image,ImageTk
 from tkinter import messagebox
 # import mysql.connector
 import cv2
+import os
+import numpy as np
 
 import pymysql
 
@@ -28,7 +30,7 @@ class Train:
         back_btn.place(x=10,y=10,width=150,height=40)
 
 
-        train_frame = LabelFrame(bg="white",bd=2)
+        train_frame = LabelFrame(bgimg_lbl,bg="white",bd=2)
         train_frame.place(x=300,y=50,width=700,height=500)
 
 
@@ -37,14 +39,49 @@ class Train:
 
         # image3 of the header of homepage
 
-        img2=Image.open(r"C:\hello\python-project\images\img7.jpg")
-        img2=img2.resize((200,130),Image.ANTIALIAS)  #ANTILIAS converts high level img to low level
+        img2=Image.open(r"C:\hello\python-project\images\face-recognition.png")
+        img2=img2.resize((100,100),Image.ANTIALIAS)  #ANTILIAS converts high level img to low level
         self.photoimg2=ImageTk.PhotoImage(img2)
 
-       
         f_lbl=Label(train_frame,image=self.photoimg2)
-        f_lbl.place(x=250,y=12,width=200,height=130)
+        f_lbl.place(x=290,y=12,width=100,height=100)
 
+        title_lbl = Label(train_frame,text="Training Data For Facial Recognition",font=("arial",20,"bold"),bg="white",fg="black")
+        title_lbl.place(x=100,y=200)
+
+        title_lbl = Label(train_frame,text="Optimize your facial recognition models for accuracy with the best quality image data",font=("arial",13,"bold"),bg="white",fg="black")
+        title_lbl.place(x=20,y=250)
+
+
+        train_btn = Button(train_frame,command=self.train_classifier,text="Train Data",cursor="hand2",font=("arial",10,"bold"),bg="royalblue",fg="white")
+        train_btn.place(x=270,y=350,width=150,height=40)
+
+
+    def train_classifier(self):
+        data_dir = ("data")
+        path = [os.path.join(data_dir,file) for file in os.listdir(data_dir)]
+
+        faces = []
+        ids=[]
+
+        for image in path:
+            img = Image.open(image).convert('L')  # gray scale image
+            imageNp = np.array(img,'uint8')
+            id = int(os.path.split(image)[1].split('.')[1])
+
+            faces.append(imageNp)
+            ids.append(id)
+            cv2.imshow("Traing",imageNp)
+            cv2.waitKey(1)==13
+
+        ids = np.array(ids)
+
+        # ============= train the classifier ==================
+        clf = cv2.face.LBPHFaceRecognizer_create()
+        clf.train(faces,ids)
+        clf.write("classifier.xml")
+        cv2.destroyAllWindows()
+        messagebox.showinfo("Result","Training dataset completed!!",parent=self.root)            
 
 if __name__ == "__main__":
     root=Tk()
