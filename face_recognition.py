@@ -84,28 +84,30 @@ class Face_Recognition:
     # ========================= function ======================
 
     def face_recog(self):
-        def draw_boundray(img,classifier,sacleFactor,minNeighbours,color,text,clf):
+        def draw_boundray(img,classifier,scaleFactor,minNeighbors,color,text,clf):
             gray_image = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
-            features = classifier.detectMultiScale(gray_image,sacleFactor,minNeighbours) 
+            # gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
+            # gray_image= Image.open(img).convert('L')
+            features = classifier.detectMultiScale(gray_image,scaleFactor,minNeighbors) 
 
             coord = []
             for(x,y,w,h) in features:
                 cv2.rectangle(img,(x,y),(x+w,y+h),(0,255,0),3)
-                id,predict=clf.predict(gray_image[y:y+h,x:x+w])
+                id,predict=clf.predict(gray_image[y:y+h, x:x+w])
                 confidence = int((100*(1-predict/300))) 
 
                 conn =  pymysql.connect(host="localhost",database="face_recognition",user="root",password="Yuvraj@5587",port=3306)
                 my_cursor=conn.cursor()
 
-                my_cursor.execute("select Caregiver_Name from caregiver where CaregiverID="+str(id))
+                my_cursor.execute("select Caregiver_Name from caregiver where CaregiverID="+str(2))
                 n = my_cursor.fetchone()
                 n="+".join(n)
 
-                my_cursor.execute("select Address from caregiver where CaregiverID="+str(id))
+                my_cursor.execute("select Address from caregiver where CaregiverID="+str(2))
                 a = my_cursor.fetchone()
                 a="+".join(a)
  
-                my_cursor.execute("select Mobile_No from caregiver where CaregiverID="+str(id))
+                my_cursor.execute("select Mobile_No from caregiver where CaregiverID="+str(2))
                 m = my_cursor.fetchone()
                 m="+".join(m)
  
@@ -140,8 +142,8 @@ class Face_Recognition:
 
             if cv2.waitKey(1)==13:
                 break
-            video_cap.release()
-            cv2.destroyAllWindows()
+        video_cap.release()
+        cv2.destroyAllWindows()
                
 
         
