@@ -3,6 +3,8 @@ from tkinter import*
 from tkinter import ttk
 from PIL import Image,ImageTk
 from tkinter import messagebox
+from train import Train
+from caregiver import Caregiver 
 # import mysql.connector
 import cv2
 import os
@@ -83,6 +85,30 @@ class Face_Recognition:
         
     # ========================= function ======================
 
+
+    # def getImagesAndLabels(path):
+    # # get the path of all the files in the folder
+    # imagePaths = [os.path.join(path, f) for f in os.listdir(path)]
+    # # create empth face list
+    # faces = []
+    # # create empty ID list
+    # Ids = []
+    # # now looping through all the image paths and loading the Ids and the images
+    # for imagePath in imagePaths:
+    #     # loading the image and converting it to gray scale
+    #     pilImage = Image.open(imagePath).convert('L')
+    #     # Now we are converting the PIL image into numpy array
+    #     imageNp = np.array(pilImage, 'uint8')
+    #     # getting the Id from the image
+    #     ID = int(os.path.split(imagePath)[-1].split(".")[1])
+    #     # extract the face from the training image sample
+    #     faces.append(imageNp)
+    #     Ids.append(ID)
+    # return faces, Ids
+
+###########################################################################################
+
+
     def face_recog(self):
         def draw_boundray(img,classifier,scaleFactor,minNeighbors,color,text,clf):
             gray_image = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
@@ -90,24 +116,25 @@ class Face_Recognition:
             # gray_image= Image.open(img).convert('L')
             features = classifier.detectMultiScale(gray_image,scaleFactor,minNeighbors) 
 
-            coord = []
+            coord = [] 
             for(x,y,w,h) in features:
                 cv2.rectangle(img,(x,y),(x+w,y+h),(0,255,0),3)
-                id,predict=clf.predict(gray_image[y:y+h, x:x+w])
-                confidence = int((100*(1-predict/300))) 
+                id,pre=clf.predict(gray_image[y:y+h, x:x+w])
+                # id = predict
+                confidence = int((100*(1-pre/300))) 
 
                 conn =  pymysql.connect(host="localhost",database="face_recognition",user="root",password="Yuvraj@5587",port=3306)
                 my_cursor=conn.cursor()
 
-                my_cursor.execute("select Caregiver_Name from caregiver where CaregiverID="+str(2))
+                my_cursor.execute("select Caregiver_Name from caregiver where CaregiverID="+str(id))
                 n = my_cursor.fetchone()
                 n="+".join(n)
 
-                my_cursor.execute("select Address from caregiver where CaregiverID="+str(2))
+                my_cursor.execute("select Address from caregiver where CaregiverID="+str(id))
                 a = my_cursor.fetchone()
                 a="+".join(a)
  
-                my_cursor.execute("select Mobile_No from caregiver where CaregiverID="+str(2))
+                my_cursor.execute("select Mobile_No from caregiver where CaregiverID="+str(id))
                 m = my_cursor.fetchone()
                 m="+".join(m)
  
@@ -144,6 +171,9 @@ class Face_Recognition:
                 break
         video_cap.release()
         cv2.destroyAllWindows()
+
+
+
                
 
         
