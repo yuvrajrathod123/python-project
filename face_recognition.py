@@ -5,6 +5,8 @@ from PIL import Image,ImageTk
 from tkinter import messagebox
 from train import Train
 from caregiver import Caregiver 
+from time import strftime
+from datetime import datetime 
 # import mysql.connector
 import cv2
 import os
@@ -79,32 +81,27 @@ class Face_Recognition:
         face_lbl.place(x=500,y=100,width=250,height=250)
 
          # face detector button
-        back_btn = Button(bgimg_lbl,command=self.face_recog,text="Face Detector",cursor="hand2",font=("arial",15,"bold"),bg="white",fg="darkred")
+        back_btn = Button(bgimg_lbl,command=self.face_recog,text="Face Recognition",cursor="hand2",font=("arial",15,"bold"),bg="white",fg="darkred")
         back_btn.place(x=500,y=350,width=250,height=42)
 
         
     # ========================= function ======================
 
 
-    # def getImagesAndLabels(path):
-    # # get the path of all the files in the folder
-    # imagePaths = [os.path.join(path, f) for f in os.listdir(path)]
-    # # create empth face list
-    # faces = []
-    # # create empty ID list
-    # Ids = []
-    # # now looping through all the image paths and loading the Ids and the images
-    # for imagePath in imagePaths:
-    #     # loading the image and converting it to gray scale
-    #     pilImage = Image.open(imagePath).convert('L')
-    #     # Now we are converting the PIL image into numpy array
-    #     imageNp = np.array(pilImage, 'uint8')
-    #     # getting the Id from the image
-    #     ID = int(os.path.split(imagePath)[-1].split(".")[1])
-    #     # extract the face from the training image sample
-    #     faces.append(imageNp)
-    #     Ids.append(ID)
-    # return faces, Ids
+    def mark_attendance(self,i,n,a,m):
+        with open("attendance.csv","r+",newline="\n") as f:
+            myDatalist = f.readlines()
+            name_list = []
+            for line in myDatalist:
+                entry = line.split((","))
+                name_list.append(entry[0])
+         # for no repeate attentence
+            if((i not in name_list) and (n not in name_list) and (a not in name_list) and (m not in name_list)):
+                now = datetime.now()
+                d1 = now.strftime("%d/%m/%Y")
+                datestring = now.strftime("%H:%M:%S")
+                f.writelines(f"\n{i},{n},{a},{m},{datestring},{d1},Present")
+
 
 ###########################################################################################
 
@@ -138,12 +135,19 @@ class Face_Recognition:
                 m = my_cursor.fetchone()
                 m="+".join(m)
  
+                my_cursor.execute("select CaregiverID from caregiver where CaregiverID="+str(id))
+                i = my_cursor.fetchone()
+                i="+".join(i)
+
+
+ 
 
                 if confidence>77:
+                    cv2.putText(img,f"CaregiverID:{i}",(x,y-75),cv2.FONT_HERSHEY_COMPLEX,0.8,(255,255,255),3)
                     cv2.putText(img,f"Caregiver_Name:{n}",(x,y-55),cv2.FONT_HERSHEY_COMPLEX,0.8,(255,255,255),3)
                     cv2.putText(img,f"Address:{a}",(x,y-30),cv2.FONT_HERSHEY_COMPLEX,0.8,(255,255,255),3)
                     cv2.putText(img,f"Mobile_No:{m}",(x,y-5),cv2.FONT_HERSHEY_COMPLEX,0.8,(255,255,255),3)
-
+                    self.mark_attendance(i,n,a,m)
                 else:
                     cv2.rectangle(img,(x,y),(x+w,y+h),(0,0,255),3)
                     cv2.putText(img,"Unknown Face",(x,y-5),cv2.FONT_HERSHEY_COMPLEX,0.8,(255,255,255),3)
