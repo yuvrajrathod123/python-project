@@ -80,32 +80,33 @@ class Attendance:
         # ************* entry **************
 
          # caregiverId
-        caregiverId_lbl = Label(left_frame,text="CaregiversID",font=("arial",10,"bold"),bg='white')
-        caregiverId_lbl.grid(row=0,column=0,padx=5,pady=30,sticky=W)
+        caregiverId_lbl = Label(left_frame,text="CaregiversID:",font=("arial",10,"bold"),bg='white')
+        caregiverId_lbl.grid(row=0,column=0,padx=10,pady=30,sticky=W)
 
         caregiverId_entry = ttk.Entry(left_frame,width=20,font=("arial",10,"bold"))
         caregiverId_entry.grid(row=0,column=1,padx=0,sticky=W)
 
-         # Caregiver name
-        caregiver_name_lbl = Label(left_frame,text="Caregiver's Name",font=("arial",10,"bold"),bg='white')
-        caregiver_name_lbl.grid(row=0,column=2,padx=5,pady=7,sticky=W)
+        # Caregiver name
+        caregiver_name_lbl = Label(left_frame,text="Caregiver's Name:",font=("arial",10,"bold"),bg='white')
+        caregiver_name_lbl.grid(row=0,column=2,padx=10,pady=7,sticky=W)
 
         caregiver_name_entry = ttk.Entry(left_frame,width=20,font=("arial",10,"bold"))
         caregiver_name_entry.grid(row=0,column=3,padx=0,sticky=W)
 
-         # date
-        date_lbl = Label(left_frame,text="Date",font=("arial",10,"bold"),bg='white')
-        date_lbl.grid(row=1,column=0,padx=15,pady=7,sticky=W)
-
-        date_entry = ttk.Entry(left_frame,width=20,font=("arial",10,"bold"))
-        date_entry.grid(row=1,column=1,padx=0,sticky=W)
-
-         # time
-        time_lbl = Label(left_frame,text="Time",font=("arial",10,"bold"),bg='white')
-        time_lbl.grid(row=1,column=2,padx=15,pady=7,sticky=W)
+        # time
+        time_lbl = Label(left_frame,text="time",font=("arial",10,"bold"),bg='white')
+        time_lbl.grid(row=1,column=0,padx=10,pady=7,sticky=W)
 
         time_entry = ttk.Entry(left_frame,width=20,font=("arial",10,"bold"))
-        time_entry.grid(row=1,column=3,padx=0,sticky=W)
+        time_entry.grid(row=1,column=1,padx=0,sticky=W)
+
+          # date
+        date_lbl = Label(left_frame,text="Email",font=("arial",10,"bold"),bg='white')
+        date_lbl.grid(row=1,column=2,padx=10,pady=7,sticky=W)
+
+        date_entry = ttk.Entry(left_frame,width=20,font=("arial",10,"bold"))
+        date_entry.grid(row=1,column=3,padx=0,sticky=W)
+
 
           # attendance
         attendance_lbl = Label(left_frame,text="Attendance Status",font=("arial",10,"bold"),bg='white')
@@ -117,9 +118,59 @@ class Attendance:
         time_combo.grid(row=2,column=1,padx=5,pady=10)
 
 
+        # ///////////////////// buttons ///////////////////////
+
+        btn_frame = LabelFrame(left_frame,bg="white",bd=2,relief=RIDGE)
+        btn_frame.place(x=0,y=350,width=580,height=30)
+
+        import_btn = Button(btn_frame,text="Import csv",font=("arial",10,"bold"),bg="RoyalBlue1",fg="white",width=17)
+        import_btn.grid(row=0,column=0)
+
+        export_btn = Button(btn_frame,text="Export csv",font=("arial",10,"bold"),bg="RoyalBlue1",fg="white",width=17)
+        export_btn.grid(row=0,column=1)
+
+        update_btn = Button(btn_frame,text="Update",font=("arial",10,"bold"),bg="RoyalBlue1",fg="white",width=17)
+        update_btn.grid(row=0,column=2)
+
+        reset_btn = Button(btn_frame,text="Reset",font=("arial",10,"bold"),bg="RoyalBlue1",fg="white",width=17)
+        reset_btn.grid(row=0,column=3)
+
+
          # ==================== right side label frame ==================
         right_frame = LabelFrame(main_frame,bg="white",bd=2,relief=RIDGE,text="Attendance Details",font=("arial",12,"bold"))
         right_frame.place(x=620,y=10,width=625,height=580)
+
+         # ===================== table frame ============================
+        table_frame = Frame(right_frame,bg="white",bd=2,relief=RIDGE)
+        table_frame.place(x=5,y=5,width=610,height=420)
+
+        scroll_x =ttk.Scrollbar(table_frame,orient=HORIZONTAL)
+        scroll_y =ttk.Scrollbar(table_frame,orient=VERTICAL)
+        
+        self.caregiver_table = ttk.Treeview(table_frame,column=("caregiverID","caregiver_name","time","date","attendance"),xscrollcommand=scroll_x.set,yscrollcommand=scroll_y.set)
+
+        scroll_x.pack(side=BOTTOM,fill=X)
+        scroll_y.pack(side=RIGHT,fill=Y)
+        scroll_x.config(command=self.caregiver_table.xview)
+        scroll_y.config(command=self.caregiver_table.yview)
+
+        self.caregiver_table.heading("caregiverID",text="CaregiversID")
+        self.caregiver_table.heading("caregiver_name",text="Caregiver Name")
+        self.caregiver_table.heading("time",text="Time")
+        self.caregiver_table.heading("date",text="Date")
+        self.caregiver_table.heading("attendance",text="Attendance")
+        self.caregiver_table["show"]="headings"
+        
+        self.caregiver_table.column("caregiverID",width=100)
+        self.caregiver_table.column("caregiver_name",width=100)
+        self.caregiver_table.column("time",width=100)
+        self.caregiver_table.column("date",width=100)
+        self.caregiver_table.column("attendance",width=100)
+       
+
+        self.caregiver_table.pack(fill=BOTH,expand=1)
+        # self.caregiver_table.bind("<ButtonRelease>")
+        # self.fetch_data()
 
 
 if __name__ == "__main__":
