@@ -5,6 +5,7 @@ import os
 from caregiver import Caregiver
 from train import Train
 from face_recognition import Face_Recognition
+from attendance import Attendance
 
 
 class Face_recognition_sys:
@@ -95,10 +96,10 @@ class Face_recognition_sys:
         img8=img8.resize((150,150),Image.ANTIALIAS)  #ANTILIAS converts high level img to low level
         self.photoimg8=ImageTk.PhotoImage(img8)
 
-        btn3 = Button(bgimg_lbl,image=self.photoimg8,cursor="hand2")
+        btn3 = Button(bgimg_lbl,image=self.photoimg8,cursor="hand2",command=self.attendance)
         btn3.place(x=455,y=80,width=150,height=150)
 
-        btn3_3 = Button(bgimg_lbl,text="Regular Status",cursor="hand2",font=("arial",10,"bold"),bg="darkblue",fg="white")
+        btn3_3 = Button(bgimg_lbl,text="Regular Status",cursor="hand2",command=self.attendance,font=("arial",10,"bold"),bg="darkblue",fg="white")
         btn3_3.place(x=455,y=220,width=150,height=40)
 
 
@@ -165,6 +166,10 @@ class Face_recognition_sys:
     def detect_face(self): 
         self.new_window = Toplevel(self.root)
         self.app = Face_Recognition(self.new_window)    
+        
+    def attendance(self): 
+        self.new_window = Toplevel(self.root)
+        self.app = Attendance(self.new_window)    
         
 if __name__ == "__main__":
     root=Tk()
