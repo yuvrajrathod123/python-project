@@ -26,7 +26,7 @@ class Train:
         # back button
 
         back_btn = Button(bgimg_lbl,text="back",cursor="hand2",font=("arial",10,"bold"),bg="white",fg="red")
-        back_btn.place(x=10,y=10,width=150,height=40)
+        back_btn.place(x=1100,y=10,width=150,height=40)
 
 
         train_frame = LabelFrame(bgimg_lbl,bg="white",bd=2)
@@ -80,7 +80,12 @@ class Train:
         clf.train(faces,ids)
         clf.write("classifier.xml")
         cv2.destroyAllWindows()
-        messagebox.showinfo("Result","Training dataset completed!!",parent=self.root)            
+        messagebox.showinfo("Result","Training dataset completed!!",parent=self.root)         
+
+        # =================== back (exit) ==================
+
+        # def exit(self):
+        #     self.exit=tkinter.   
 
 if __name__ == "__main__":
     root=Tk()

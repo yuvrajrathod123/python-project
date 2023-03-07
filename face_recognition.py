@@ -68,9 +68,18 @@ class Face_Recognition:
         title_lbl = Label(bgimg_lbl,text="FACE RECOGNITION",font=("arial",25,"bold"),bg="white",fg="green")
         title_lbl.place(relx=0.5,rely=0.03,width=1530,height=45,anchor=CENTER)
 
+        def time():
+            string = strftime("%H:%M:%S %p")
+            lbl.config(text= string)
+            lbl.after(1000, time)
+
+        lbl = Label(bgimg_lbl   ,font=("arial",14,"bold"),bg='white',fg="red")
+        lbl.place(x=0,y=0,width=110,height=45)    
+        time()
+
         # back button
         back_btn = Button(bgimg_lbl,text="back",cursor="hand2",font=("arial",10,"bold"),bg="white",fg="darkred")
-        back_btn.place(x=10,y=0,width=100,height=42)
+        back_btn.place(x=1100,y=0,width=100,height=42)
 
          #  image
         img5=Image.open(r"C:\hello\python-project\images\face1.webp")

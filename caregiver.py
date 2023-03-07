@@ -245,6 +245,10 @@ class Caregiver:
         reset_btn = Button(btn_frame,command=self.reset_data,text="Reset",font=("arial",10,"bold"),bg="RoyalBlue1",fg="white",width=17)
         reset_btn.grid(row=0,column=3)
 
+         # back button
+        back_btn = Button(bgimg_lbl,text="back",cursor="hand2",font=("arial",10,"bold"),bg="white",fg="darkred")
+        back_btn.place(x=1100,y=0,width=100,height=42)
+        
             ################# frame for take a photo button ################
         btn2_frame = LabelFrame(Extra_info_frame,bg="white",bd=2,relief=RIDGE)
         btn2_frame.place(x=0,y=240,width=580,height=30)

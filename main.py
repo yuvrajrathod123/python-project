@@ -6,6 +6,8 @@ from caregiver import Caregiver
 from train import Train
 from face_recognition import Face_Recognition
 from attendance import Attendance
+from time import strftime
+from datetime import datetime 
 
 
 class Face_recognition_sys:
@@ -62,7 +64,15 @@ class Face_recognition_sys:
 
         title_lbl = Label(bgimg_lbl,text="IDENTIFICATION OF CAREGIVERS USING FACE RECOGNITION",font=("arial",25,"bold"),bg="white",fg="black")
         title_lbl.place(relx=0.4,rely=0.03,width=1530,height=45,anchor=CENTER)
-        
+
+        def time():
+            string = strftime("%H:%M:%S %p")
+            lbl.config(text= string)
+            lbl.after(1000, time)
+
+        lbl = Label(bgimg_lbl   ,font=("arial",14,"bold"),bg='white',fg="red")
+        lbl.place(x=0,y=0,width=110,height=45)    
+        time()
 
         # ================== buttons =========================
 
@@ -116,38 +126,38 @@ class Face_recognition_sys:
 
 
          # help desk button
-        img10=Image.open(r"C:\hello\python-project\images\help_desk.jpg")
-        img10=img10.resize((150,150),Image.ANTIALIAS)  #ANTILIAS converts high level img to low level
-        self.photoimg10=ImageTk.PhotoImage(img10)
+        # img10=Image.open(r"C:\hello\python-project\images\help_desk.jpg")
+        # img10=img10.resize((150,150),Image.ANTIALIAS)  #ANTILIAS converts high level img to low level
+        # self.photoimg10=ImageTk.PhotoImage(img10)
 
-        btn5 = Button(bgimg_lbl,image=self.photoimg10,cursor="hand2")
-        btn5.place(x=855,y=80,width=150,height=150)
+        # btn5 = Button(bgimg_lbl,image=self.photoimg10,cursor="hand2")
+        # btn5.place(x=855,y=80,width=150,height=150)
 
-        btn5_5 = Button(bgimg_lbl,text="Help Desk",cursor="hand2",font=("arial",10,"bold"),bg="darkblue",fg="white")
-        btn5_5.place(x=855,y=220,width=150,height=40)
+        # btn5_5 = Button(bgimg_lbl,text="Help Desk",cursor="hand2",font=("arial",10,"bold"),bg="darkblue",fg="white")
+        # btn5_5.place(x=855,y=220,width=150,height=40)
 
 
          # Exit button
-        img11=Image.open(r"C:\hello\python-project\images\exit.jpg")
-        img11=img11.resize((150,150),Image.ANTIALIAS)  #ANTILIAS converts high level img to low level
-        self.photoimg11=ImageTk.PhotoImage(img11)
+        # img11=Image.open(r"C:\hello\python-project\images\exit.jpg")
+        # img11=img11.resize((150,150),Image.ANTIALIAS)  #ANTILIAS converts high level img to low level
+        # self.photoimg11=ImageTk.PhotoImage(img11)
 
-        btn6 = Button(bgimg_lbl,image=self.photoimg11,cursor="hand2")
-        btn6.place(x=1050,y=80,width=150,height=150)
+        # btn6 = Button(bgimg_lbl,image=self.photoimg11,cursor="hand2")
+        # btn6.place(x=1050,y=80,width=150,height=150)
 
-        btn6_6 = Button(bgimg_lbl,text="Exit",cursor="hand2",font=("arial",10,"bold"),bg="darkblue",fg="white")
-        btn6_6.place(x=1050,y=220,width=150,height=40)
+        # btn6_6 = Button(bgimg_lbl,text="Exit",cursor="hand2",font=("arial",10,"bold"),bg="darkblue",fg="white")
+        # btn6_6.place(x=1050,y=220,width=150,height=40)
 
-        # caregiver button
+        # train button
         img12=Image.open(r"C:\hello\python-project\images\img3.jpg")
         img12=img12.resize((150,150),Image.ANTIALIAS)  #ANTILIAS converts high level img to low level
         self.photoimg12=ImageTk.PhotoImage(img12)
 
         btn7 = Button(bgimg_lbl,image=self.photoimg12,cursor="hand2",command= self.tarin_data)
-        btn7.place(x=70,y=300,width=150,height=150)
+        btn7.place(x=855,y=80,width=150,height=150)
 
         btn7_7 = Button(bgimg_lbl,text="Train Data",cursor="hand2",font=("arial",10,"bold"),bg="darkblue",fg="white",command= self.tarin_data)
-        btn7_7.place(x=70,y=440,width=150,height=40)
+        btn7_7.place(x=855,y=220,width=150,height=40)
 
 
     def open_img(self):
