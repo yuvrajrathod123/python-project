@@ -281,25 +281,25 @@ class Caregiver:
 
         # ============================== searching systm ==============================
 
-        search_frame = LabelFrame(right_frame,bg="white",bd=2,relief=RIDGE,text="Search System",font=("arial",12,"bold"))
-        search_frame.place(x=5,y=7,width=610,height=70)
+        # search_frame = LabelFrame(right_frame,bg="white",bd=2,relief=RIDGE,text="Search System",font=("arial",12,"bold"))
+        # search_frame.place(x=5,y=7,width=610,height=70)
 
-        search_lbl = Label(search_frame,text="Search By",font=("arial",12,"bold"),bg='red',fg="white")
-        search_lbl.grid(row=0,column=0,padx=10,pady=7,sticky=W)
+        # search_lbl = Label(search_frame,text="Search By",font=("arial",12,"bold"),bg='red',fg="white")
+        # search_lbl.grid(row=0,column=0,padx=10,pady=7,sticky=W)
 
-        search_combo = ttk.Combobox(search_frame,font=("arial",10,"bold"),width=15,state="readonly")
-        search_combo["values"]=("select","CaregiverID","Mobile No")
-        search_combo.current(0)
-        search_combo.grid(row=0,column=1,padx=5,pady=10,sticky=W)
+        # search_combo = ttk.Combobox(search_frame,font=("arial",10,"bold"),width=15,state="readonly")
+        # search_combo["values"]=("select","CaregiverID","Mobile No")
+        # search_combo.current(0)
+        # search_combo.grid(row=0,column=1,padx=5,pady=10,sticky=W)
 
-        search_entry = ttk.Entry(search_frame,width=20,font=("arial",10,"bold"))
-        search_entry.grid(row=0,column=2,padx=5,pady=5,sticky=W)
+        # search_entry = ttk.Entry(search_frame,width=20,font=("arial",10,"bold"))
+        # search_entry.grid(row=0,column=2,padx=5,pady=5,sticky=W)
 
-        search_btn = Button(search_frame,text="Search",font=("arial",10,"bold"),bg="RoyalBlue1",fg="white",width=10)
-        search_btn.grid(row=0,column=3,padx=5)
+        # search_btn = Button(search_frame,text="Search",font=("arial",10,"bold"),bg="RoyalBlue1",fg="white",width=10)
+        # search_btn.grid(row=0,column=3,padx=5)
 
-        show_all_btn = Button(search_frame,text="Show All",font=("arial",10,"bold"),bg="RoyalBlue1",fg="white",width=10)
-        show_all_btn.grid(row=0,column=4)
+        # show_all_btn = Button(search_frame,text="Show All",font=("arial",10,"bold"),bg="RoyalBlue1",fg="white",width=10)
+        # show_all_btn.grid(row=0,column=4)
 
 
         # ===================== table frame ============================
